@@ -3,12 +3,9 @@ import tkinter.font
 import numpy as np
 from scipy.optimize import curve_fit
 import matplotlib.pyplot as plt
-from matplotlib.backends.backend_tkagg import (
-    FigureCanvasTkAgg, NavigationToolbar2Tk)
 from mpl_toolkits import mplot3d
 from dataclasses import dataclass
 import time
-from typing import List
 
 
 @dataclass
@@ -100,7 +97,7 @@ class Fritts:
 
 
 class Plotter:
-    def __init__(self, meas: List[Measurement], window):
+    def __init__(self, meas, window):
         elapsed = np.array([m.elapsed for m in meas])
         distance = np.array([m.distance for m in meas])
         width = np.array([m.width for m in meas])
@@ -122,7 +119,6 @@ class Plotter:
         elapsed = self.elapsed
 
         ax.scatter3D(distance, width, elapsed, c=elapsed, cmap='viridis')
-        # ax.plot_trisurf(distance, width, elapsed, cmap='Greens', edgecolor=None)
 
 
         di = np.linspace(min(distance), max(distance), 15)
@@ -134,11 +130,6 @@ class Plotter:
         ax.view_init(15, 6)
 
         plt.show()
-        """
-        canv = FigureCanvasTkAgg(fig, self.window)
-        canv.draw()
-        canv.get_tk_widget().grid(row=1, column=0, columnspan=2)
-        """
         
     
     @staticmethod
